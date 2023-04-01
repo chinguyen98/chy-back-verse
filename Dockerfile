@@ -4,9 +4,8 @@ WORKDIR /user/src/app
 
 COPY . .
 
-RUN yarn install
-
-RUN yarn build
+RUN yarn && \
+    yarn cache clean
 
 EXPOSE 3000
 

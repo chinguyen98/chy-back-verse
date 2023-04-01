@@ -1,11 +1,14 @@
-=version: '3'
+version: '3'
 services:
   mongo:
     image: mongo
+    restart: always
     ports:
-      - "27017:27017"
+      - '27017:27017'
     networks:
       - nest-mongo-network
+    env_file:
+      - .env
   nestjs-api:
     build:
       context: .
