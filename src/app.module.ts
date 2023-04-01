@@ -10,7 +10,10 @@ import { DB_CONFIG } from './shared/configs';
   imports: [
     AuthModule,
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(DB_CONFIG.MONGO_URL),
+    MongooseModule.forRoot(DB_CONFIG.MONGO_URL, {
+      retryDelay: 500,
+      retryAttempts: 3,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
