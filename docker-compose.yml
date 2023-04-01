@@ -1,25 +1,11 @@
 version: '3'
 services:
-  postgres:
-    image: postgres:15.2
-    networks:
-      - postgres
-    volumes:
-      - /data/postgres:/data/postgres
-    env_file:
-      - .env
-
-  pgadmin:
-    image: dpage/pgadmin4:6.21
-    networks:
-      - postgres
+  mongo:
+    image: mongo
     ports:
-      - '8008:80'
-    volumes:
-      - /data/pgadmin:/root/.pgadmin
-    env_file:
-      - .env
-
+      - "27017:27017"
+    networks:
+      - nest-mongo-network
   nestjs-api:
     build:
       context: .
@@ -30,9 +16,9 @@ services:
       - ./:/user/src/app
       - ignore:/user/src/app/node_modules/
     depends_on:
-      - postgres
+      - mongo
     networks:
-      - postgres
+      - nest-mongo-network
     env_file:
       - .env
 
@@ -40,5 +26,5 @@ volumes:
   ignore:
 
 networks:
-  postgres:
+  nest-mongo-network:
     driver: bridge
