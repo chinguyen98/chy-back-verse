@@ -16,7 +16,7 @@ services:
     ports:
       - '6006:3000'
     volumes:
-      - ./:/user/src/app
+      - ./src:/user/src/app/src
       - ignore:/user/src/app/node_modules/
     depends_on:
       - mongo
