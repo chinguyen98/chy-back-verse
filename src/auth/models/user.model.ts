@@ -29,6 +29,10 @@ export class User extends BaseModel<User> {
 
   @prop()
   @Expose()
+  isVerify?: string;
+
+  @prop()
+  @Expose()
   get fullName(): string {
     return `${this.firstName} ${this.lastName}`;
   }
