@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from 'src/auth/models/user.model';
+import { User, UserSchema } from 'src/models/user.model';
 import { DB_CONFIG } from 'src/shared/configs';
 import { MongoDataService } from './mongo-data.service';
 import { IDataServices } from 'src/shared/core/data-services.abstract';

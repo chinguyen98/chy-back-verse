@@ -1,6 +1,6 @@
 import { OnApplicationBootstrap } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from 'src/auth/models/user.model';
+import { User } from 'src/models/user.model';
 import { MongoRepository } from './mongo-generic-repository';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { IDataServices } from 'src/shared/core/data-services.abstract';
