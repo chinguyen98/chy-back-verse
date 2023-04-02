@@ -14,3 +14,7 @@ export class RegisterCredentialsDto {
   @MinLength(5)
   password: string;
 }
+
+export class RegisterResponseDto {
+  accessToken: string;
+}
