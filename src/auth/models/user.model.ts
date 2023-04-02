@@ -1,9 +1,8 @@
-import { Schema } from '@nestjs/mongoose';
+import { SchemaFactory } from '@nestjs/mongoose';
 import { prop } from '@typegoose/typegoose';
 import { Expose } from 'class-transformer';
 import { BaseModel } from 'src/shared/core/base.model';
 
-@Schema()
 export class User extends BaseModel {
   @prop({ unique: true })
   @Expose()
@@ -39,3 +38,5 @@ export class User extends BaseModel {
     return `${this.firstName} ${this.lastName}`;
   }
 }
+
+export const UserSchema = SchemaFactory.createForClass(User);
