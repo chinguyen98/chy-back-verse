@@ -1,16 +1,12 @@
-import { ModelType, Typegoose, prop } from 'typegoose';
-import { Expose } from 'class-transformer';
+import { prop } from '@typegoose/typegoose';
 
-export abstract class BaseModel<T> extends Typegoose {
+export abstract class BaseModel {
   @prop()
-  @Expose()
   id: string;
 
   @prop()
-  @Expose()
   created_at: Date;
 
   @prop()
-  @Expose()
   updated_at: Date;
 }

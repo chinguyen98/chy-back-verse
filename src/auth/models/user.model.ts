@@ -1,8 +1,10 @@
+import { Schema } from '@nestjs/mongoose';
+import { prop } from '@typegoose/typegoose';
 import { Expose } from 'class-transformer';
 import { BaseModel } from 'src/shared/core/base.model';
-import { ModelType, prop } from 'typegoose';
 
-export class User extends BaseModel<User> {
+@Schema()
+export class User extends BaseModel {
   @prop({ unique: true })
   @Expose()
   username: string;
@@ -35,17 +37,5 @@ export class User extends BaseModel<User> {
   @Expose()
   get fullName(): string {
     return `${this.firstName} ${this.lastName}`;
-  }
-
-  static get model(): ModelType<User> {
-    return new User().getModelForClass(User);
-  }
-
-  static get modelName(): string {
-    return this.model.modelName;
-  }
-
-  static createModel() {
-    return new this.model();
   }
 }
