@@ -1,10 +1,8 @@
 import {
-  IsDateString,
   IsEmail,
-  IsNumberString,
   IsString,
   MaxLength,
-  MinLength,
+  MinLength
 } from 'class-validator';
 
 export class RegisterCredentialsDto {
@@ -22,7 +20,7 @@ export class RegisterCredentialsDto {
   password: string;
 
   @IsString()
-  date: string;
+  date_of_birth: string;
 }
 
 export class RegisterResponseDto {
