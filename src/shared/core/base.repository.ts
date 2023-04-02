@@ -4,7 +4,7 @@ import { IGenericRepository } from './abstracts/generic-repository.abstract';
 export abstract class BaseRepository<T extends Typegoose> implements IGenericRepository<T> {
   private _model: ModelType<T>;
 
-  constructor(model: ModelType<T>, populateOnFind: string[] = []) {
+  constructor(model: ModelType<T>) {
     this._model = model;
   }
 
