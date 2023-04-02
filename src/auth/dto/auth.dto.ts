@@ -1,4 +1,10 @@
-import { IsString, MinLength, MaxLength, Matches, IsEmail } from 'class-validator';
+import {
+  IsEmail,
+  IsNumberString,
+  IsString,
+  MaxLength,
+  MinLength
+} from 'class-validator';
 
 export class RegisterCredentialsDto {
   @IsString()
@@ -13,6 +19,15 @@ export class RegisterCredentialsDto {
   @IsString()
   @MinLength(5)
   password: string;
+
+  @IsNumberString()
+  day: string;
+
+  @IsNumberString()
+  month: string;
+
+  @IsNumberString()
+  year: string;
 }
 
 export class RegisterResponseDto {
