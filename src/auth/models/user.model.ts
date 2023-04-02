@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { BaseModel } from 'src/shared/base.model';
+import { BaseModel } from 'src/shared/core/base.model';
 import { ModelType, prop } from 'typegoose';
 
 export class User extends BaseModel<User> {
