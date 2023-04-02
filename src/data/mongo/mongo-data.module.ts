@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/auth/models/user.model';
 import { DB_CONFIG } from 'src/shared/configs';
-import { IDataServices } from 'src/shared/core/abstracts/data-services.abstract';
 import { MongoDataService } from './mongo-data.service';
+import { IDataServices } from 'src/shared/core/data-services.abstract';
 
 @Module({
   imports: [

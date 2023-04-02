@@ -1,6 +1,6 @@
 import { ReturnModelType } from '@typegoose/typegoose';
 import { AnyParamConstructor } from '@typegoose/typegoose/lib/types';
-import { IGenericRepository } from './abstracts/generic-repository.abstract';
+import { IGenericRepository } from './generic-repository.abstract';
 import { BaseModel } from './base.model';
 
 export abstract class BaseRepository<T extends BaseModel> implements IGenericRepository<T> {
