@@ -3,7 +3,7 @@ import { AnyParamConstructor } from '@typegoose/typegoose/lib/types';
 import { IGenericRepository } from './generic-repository.abstract';
 import { BaseModel } from './base.model';
 
-export abstract class BaseRepository<T extends BaseModel> implements IGenericRepository<T> {
+export class BaseRepository<T extends BaseModel> implements IGenericRepository<T> {
   private _model: ReturnModelType<AnyParamConstructor<T>>;
 
   constructor(model: ReturnModelType<AnyParamConstructor<T>>) {
@@ -19,8 +19,7 @@ export abstract class BaseRepository<T extends BaseModel> implements IGenericRep
   }
 
   async create(item: T): Promise<any> {
-    console.log('ececececec', item);
-    return await this._model.create(item);
+    return this._model.create(item);
   }
 
   async getAll(): Promise<T[]> {
