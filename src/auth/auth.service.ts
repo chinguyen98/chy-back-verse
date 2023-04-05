@@ -1,8 +1,15 @@
-import { Injectable, NotAcceptableException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  InternalServerErrorException,
+  NotAcceptableException,
+} from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
+import { IDataServices } from 'src/shared/core/data-services.abstract';
+import { ErrorCode } from 'src/shared/enums/error-code.enum';
 import { getDateFromStr, isValidDate } from 'src/shared/libs/daytime';
 import { RegisterCredentialsDto, RegisterResponseDto } from './dto/auth.dto';
-import { IDataServices } from 'src/shared/core/data-services.abstract';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -32,7 +39,10 @@ export class AuthService {
 
       console.log({ created_user });
     } catch (err) {
-      console.error('signUp error', err);
+      if (err.code === ErrorCode.CONFLICT_UNIQUE) {
+        throw new HttpException('Email is already been used!', HttpStatus.SEE_OTHER);
+      }
+      throw new InternalServerErrorException();
     }
 
     return { accessToken: 'ecec' };
