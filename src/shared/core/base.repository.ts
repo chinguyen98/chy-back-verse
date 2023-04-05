@@ -9,7 +9,21 @@ export abstract class BaseRepository<T extends BaseModel> implements IGenericRep
   constructor(model: ReturnModelType<AnyParamConstructor<T>>) {
     this._model = model;
   }
-  getAll(): Promise<T[]> {
-    return this._model.find();
+
+  async get(id: string): Promise<T> {
+    return await this._model.findById(id);
+  }
+
+  async update(id: string, item: T): Promise<T> {
+    return await this._model.findByIdAndUpdate(id, item);
+  }
+
+  async create(item: T): Promise<any> {
+    console.log('ececececec', item);
+    return await this._model.create(item);
+  }
+
+  async getAll(): Promise<T[]> {
+    return await this._model.find();
   }
 }

@@ -17,8 +17,8 @@ export interface ResponseType<T> {
 @Injectable()
 export class ResponseInterceptor<T> implements NestInterceptor<T, ResponseType<T>> {
   intercept(context: ExecutionContext, next: CallHandler): Observable<ResponseType<T>> {
-    let statusCode = context.switchToHttp().getResponse().statusCode;
-    let errorCode = [HttpStatus.OK, HttpStatus.CREATED].includes(statusCode) ? 0 : 1;
+    const statusCode = context.switchToHttp().getResponse().statusCode;
+    const errorCode = [HttpStatus.OK, HttpStatus.CREATED].includes(statusCode) ? 0 : 1;
 
     return next.handle().pipe(
       map((data) => ({

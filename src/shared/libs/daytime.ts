@@ -13,4 +13,8 @@ export const isValidDate = ({
   return dayjs(date, strFormat, true).isValid();
 };
 
+export const getDateFromStr = (strDate: string, strFormat = 'DD-MM-YYYY'): Date => {
+  return dayjs(strDate, strFormat).toDate();
+};
+
 export default dayjs;

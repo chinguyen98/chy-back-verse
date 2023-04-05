@@ -16,9 +16,13 @@ export class User extends BaseModel {
   @Expose()
   email: string;
 
+  @prop()
+  @Expose()
+  date_of_birth: Date;
+
   @prop({})
   @Expose()
-  phonenumber: string;
+  phonenumber?: string;
 
   @prop()
   @Expose()
@@ -34,9 +38,7 @@ export class User extends BaseModel {
 
   @prop()
   @Expose()
-  get fullName(): string {
-    return `${this.firstName} ${this.lastName}`;
-  }
+  fullName?: string = `${this.firstName} ${this.lastName}`;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
