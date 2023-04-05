@@ -1,5 +1,6 @@
 import { Schema, SchemaFactory } from '@nestjs/mongoose';
-import { prop } from '@typegoose/typegoose';
+import { getModelForClass, prop } from '@typegoose/typegoose';
+import { ModelType } from '@typegoose/typegoose/lib/types';
 import { Expose } from 'class-transformer';
 import { BaseModel } from 'src/shared/core/base.model';
 
@@ -40,6 +41,10 @@ export class User extends BaseModel {
   @prop()
   @Expose()
   fullName?: string = `${this.firstName} ${this.lastName}`;
+
+  static get model(): ModelType<User> {
+    return getModelForClass(User);
+  }
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
