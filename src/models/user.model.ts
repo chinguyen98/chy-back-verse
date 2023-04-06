@@ -41,6 +41,9 @@ export class User extends BaseModel {
   @Expose()
   fullName?: string = `${this.firstName} ${this.lastName}`;
 
+  @prop()
+  salt?: string;
+
   static get model(): ReturnModelType<typeof User> {
     return getModelForClass(User);
   }

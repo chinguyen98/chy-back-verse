@@ -5,15 +5,18 @@ import {
   InternalServerErrorException,
   NotAcceptableException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { IDataServices } from 'src/shared/core/data-services.abstract';
 import { ErrorCode } from 'src/shared/enums/error-code.enum';
 import { getDateFromStr, isValidDate } from 'src/shared/libs/daytime';
 import { RegisterCredentialsDto, RegisterResponseDto } from './dto/auth.dto';
+import { ACCESS_TOKEN_PAYLOAD } from 'src/shared/types/user';
+import { User } from 'src/models/user.model';
 
 @Injectable()
 export class AuthService {
-  constructor(private dataServices: IDataServices) {}
+  constructor(private dataServices: IDataServices, private jwtService: JwtService) {}
 
   async signUp(registerDto: RegisterCredentialsDto): Promise<RegisterResponseDto> {
     const { date_of_birth, password, username, email } = registerDto;
@@ -27,17 +30,19 @@ export class AuthService {
     const dateOfBirth = getDateFromStr(date_of_birth);
     const created_at = new Date();
 
+    let created_user: User;
     try {
-      const created_user = await this.dataServices.users.create({
+      created_user = await this.dataServices.users.create({
         username,
         password: hashPassword,
         email,
         created_at,
         updated_at: created_at,
         date_of_birth: dateOfBirth,
+        salt,
       });
 
-      console.log({ created_user });
+      console.log(`Create user ${created_user.username} successfully!`);
     } catch (err) {
       if (err.code === ErrorCode.CONFLICT_UNIQUE) {
         throw new HttpException('Email is already been used!', HttpStatus.SEE_OTHER);
@@ -45,6 +50,7 @@ export class AuthService {
       throw new InternalServerErrorException();
     }
 
-    return { accessToken: 'ecec' };
+    const accessTokenPayload: ACCESS_TOKEN_PAYLOAD = { username, sub: created_user.id };
+    return { accessToken: await this.jwtService.signAsync(accessTokenPayload) };
   }
 }
