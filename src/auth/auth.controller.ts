@@ -1,6 +1,7 @@
-import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Post, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterCredentialsDto, RegisterResponseDto } from './dto/auth.dto';
+import { SkipAuth } from 'src/shared/decorators/skip-auth.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -9,5 +10,11 @@ export class AuthController {
   @Post('sign-up')
   signUp(@Body(ValidationPipe) registerdto: RegisterCredentialsDto): Promise<RegisterResponseDto> {
     return this.authService.signUp(registerdto);
+  }
+
+  @SkipAuth()
+  @Get('profile')
+  getProfile() {
+    return 'req.user';
   }
 }
