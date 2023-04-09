@@ -54,8 +54,9 @@ export class AuthService {
     return { accessToken: await this.jwtService.signAsync(accessTokenPayload) };
   }
 
-  async signIn(signInDto: SigninCredentialsDto): Promise<AuthResponseDto> {
-    return { accessToken: 'ok' };
+  async signIn(user: User): Promise<AuthResponseDto> {
+    const accessTokenPayload: ACCESS_TOKEN_PAYLOAD = { username: user.username, sub: user.id };
+    return { accessToken: await this.jwtService.signAsync(accessTokenPayload) };
   }
 
   async validateUser({ username, password }: SigninCredentialsDto): Promise<any> {
