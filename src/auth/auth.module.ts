@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { JWT_CONFIG } from 'src/shared/configs';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { JwtModule } from '@nestjs/jwt';
-import { JWT_CONFIG } from 'src/shared/configs';
-import { AuthGuard } from './auth.guard';
+import { LocalStrategy } from './local.strategy';
 
 @Module({
   imports: [
@@ -12,8 +13,9 @@ import { AuthGuard } from './auth.guard';
       secret: JWT_CONFIG.SECRET,
       signOptions: { expiresIn: '1 day' },
     }),
+    PassportModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, { provide: 'APP_GUARD', useClass: AuthGuard }],
+  providers: [AuthService, LocalStrategy],
 })
 export class AuthModule {}

@@ -55,8 +55,6 @@ export class AuthService {
   }
 
   async signIn(signInDto: SigninCredentialsDto): Promise<AuthResponseDto> {
-    const user = await this.validateUser(signInDto);
-
     return { accessToken: 'ok' };
   }
 
