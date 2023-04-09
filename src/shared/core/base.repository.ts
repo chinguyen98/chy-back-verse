@@ -13,9 +13,7 @@ export class BaseRepository<T extends BaseModel> implements IGenericRepository<T
   async getBy(filter = {}): Promise<any> {
     try {
       return await this._model.findOne(filter);
-    } catch (err) {
-      console.log('hahahah', err);
-    }
+    } catch (err) {}
   }
 
   async getById(id: string): Promise<T> {

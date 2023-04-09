@@ -42,8 +42,6 @@ export class AuthService {
         date_of_birth: dateOfBirth,
         phone_number,
       });
-
-      console.log(`Create user ${created_user.username} successfully!`);
     } catch (err) {
       if (err.code === ErrorCode.CONFLICT_UNIQUE) {
         throw new HttpException('Email is already been used!', HttpStatus.SEE_OTHER);
