@@ -4,13 +4,14 @@ import {
   Injectable,
   InternalServerErrorException,
   NotAcceptableException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { IDataServices } from 'src/shared/core/data-services.abstract';
 import { ErrorCode } from 'src/shared/enums/error-code.enum';
 import { getDateFromStr, isValidDate } from 'src/shared/libs/daytime';
-import { RegisterCredentialsDto, RegisterResponseDto } from './auth.dto';
+import { RegisterCredentialsDto, AuthResponseDto, SigninCredentialsDto } from './auth.dto';
 import { ACCESS_TOKEN_PAYLOAD } from 'src/shared/types/user';
 import { User } from 'src/models/user.model';
 
@@ -18,7 +19,7 @@ import { User } from 'src/models/user.model';
 export class AuthService {
   constructor(private dataServices: IDataServices, private jwtService: JwtService) {}
 
-  async signUp(registerDto: RegisterCredentialsDto): Promise<RegisterResponseDto> {
+  async signUp(registerDto: RegisterCredentialsDto): Promise<AuthResponseDto> {
     const { date_of_birth, password, username, email } = registerDto;
 
     if (!isValidDate({ date: date_of_birth })) {
@@ -39,7 +40,6 @@ export class AuthService {
         created_at,
         updated_at: created_at,
         date_of_birth: dateOfBirth,
-        salt,
       });
 
       console.log(`Create user ${created_user.username} successfully!`);
@@ -52,5 +52,24 @@ export class AuthService {
 
     const accessTokenPayload: ACCESS_TOKEN_PAYLOAD = { username, sub: created_user.id };
     return { accessToken: await this.jwtService.signAsync(accessTokenPayload) };
+  }
+
+  async signIn(signInDto: SigninCredentialsDto): Promise<AuthResponseDto> {
+    const user = await this.validateUser(signInDto);
+
+    return { accessToken: 'ok' };
+  }
+
+  async validateUser({ username, password }: SigninCredentialsDto): Promise<any> {
+    const user = await this.dataServices.users.getBy({ username });
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+    if (!(await bcrypt.compare(password, user.password))) {
+      throw new UnauthorizedException();
+    }
+
+    return user;
   }
 }

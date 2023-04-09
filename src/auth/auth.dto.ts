@@ -18,6 +18,14 @@ export class RegisterCredentialsDto {
   date_of_birth: string;
 }
 
-export class RegisterResponseDto {
+export class SigninCredentialsDto {
+  @IsString()
+  username: string;
+
+  @IsString()
+  password: string;
+}
+
+export class AuthResponseDto {
   accessToken: string;
 }
