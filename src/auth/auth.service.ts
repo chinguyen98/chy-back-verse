@@ -10,7 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { IDataServices } from 'src/shared/core/data-services.abstract';
 import { ErrorCode } from 'src/shared/enums/error-code.enum';
 import { getDateFromStr, isValidDate } from 'src/shared/libs/daytime';
-import { RegisterCredentialsDto, RegisterResponseDto } from './dto/auth.dto';
+import { RegisterCredentialsDto, RegisterResponseDto } from './auth.dto';
 import { ACCESS_TOKEN_PAYLOAD } from 'src/shared/types/user';
 import { User } from 'src/models/user.model';
 
