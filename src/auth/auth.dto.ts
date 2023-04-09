@@ -6,6 +6,9 @@ export class RegisterCredentialsDto {
   email: string;
 
   @IsString()
+  phone_number: string;
+
+  @IsString()
   @MinLength(5)
   @MaxLength(20)
   username: string;

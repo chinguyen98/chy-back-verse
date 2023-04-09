@@ -20,7 +20,7 @@ export class AuthService {
   constructor(private dataServices: IDataServices, private jwtService: JwtService) {}
 
   async signUp(registerDto: RegisterCredentialsDto): Promise<AuthResponseDto> {
-    const { date_of_birth, password, username, email } = registerDto;
+    const { date_of_birth, password, username, email, phone_number } = registerDto;
 
     if (!isValidDate({ date: date_of_birth })) {
       throw new NotAcceptableException('Date is not valid');
@@ -40,6 +40,7 @@ export class AuthService {
         created_at,
         updated_at: created_at,
         date_of_birth: dateOfBirth,
+        phone_number,
       });
 
       console.log(`Create user ${created_user.username} successfully!`);
@@ -60,7 +61,9 @@ export class AuthService {
   }
 
   async validateUser({ username, password }: SigninCredentialsDto): Promise<any> {
-    const user = await this.dataServices.users.getBy({ username });
+    const user = await this.dataServices.users.getBy({
+      $or: [{ email: username }, { phone_number: username }],
+    });
 
     if (!user) {
       throw new UnauthorizedException();

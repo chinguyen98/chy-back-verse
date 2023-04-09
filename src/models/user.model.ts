@@ -23,7 +23,7 @@ export class User extends BaseModel {
 
   @prop({})
   @Expose()
-  phonenumber?: string;
+  phone_number?: string;
 
   @prop()
   @Expose()
