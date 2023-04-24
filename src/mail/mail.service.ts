@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
+import { JwtService } from '@nestjs/jwt';
+import { EMAIL_VERIFICATION_PAYLOAD } from 'src/shared/types/user';
 
 @Injectable()
 export class MailService {
-  constructor(private readonly mailerService: MailerService) {}
+  constructor(private readonly mailerService: MailerService, private jwtService: JwtService) {}
 
   private async sendEmail(
     template: string,
@@ -26,10 +28,16 @@ export class MailService {
     }
   }
 
-  public async sendVerifyAccountEmail(email: string, username: string, code: string) {
-    await this.sendEmail('verify-account', 'Verify your account on Fine Social', email, {
+  public async sendVerifyAccountEmail(email: string, username: string) {
+    const payload: EMAIL_VERIFICATION_PAYLOAD = { email };
+
+    const token = this.jwtService.sign(payload);
+
+    const url = `?token=${token}`;
+
+    await this.sendEmail('verify-account', 'Verify your account on Discochy', email, {
       username,
-      code,
+      url,
     });
   }
 }
