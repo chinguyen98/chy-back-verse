@@ -4,9 +4,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { DataModule } from './data/data.module';
+import { VerificationModule } from './verification/verification.module';
 
 @Module({
-  imports: [DataModule, ConfigModule.forRoot({ isGlobal: true }), AuthModule],
+  imports: [DataModule, ConfigModule.forRoot({ isGlobal: true }), AuthModule, VerificationModule],
   controllers: [AppController],
   providers: [AppService],
 })

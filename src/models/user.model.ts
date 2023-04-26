@@ -35,7 +35,7 @@ export class User extends BaseModel {
 
   @prop()
   @Expose()
-  isVerify?: string;
+  isVerify?: boolean;
 
   @prop()
   @Expose()

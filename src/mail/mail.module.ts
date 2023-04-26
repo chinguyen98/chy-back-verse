@@ -9,7 +9,7 @@ import { MailService } from './mail.service';
     MailerModule.forRoot({
       transport: {
         host: MAILER_CONFIG.HOST,
-        port: +MAILER_CONFIG.PORT,
+        port: MAILER_CONFIG.PORT,
         ignoreTLS: true,
         secure: false,
         auth: {
@@ -22,7 +22,7 @@ import { MailService } from './mail.service';
       },
       preview: false,
       template: {
-        dir: __dirname + '/templates',
+        dir: process.cwd() + '/src/mail/templates/',
         adapter: new HandlebarsAdapter(),
         options: {
           strict: true,

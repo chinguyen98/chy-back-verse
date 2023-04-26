@@ -7,6 +7,8 @@ import { AuthService } from './auth.service';
 import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { MailService } from 'src/mail/mail.service';
+import { MailModule } from 'src/mail/mail.module';
 
 @Module({
   imports: [
@@ -16,10 +18,12 @@ import { JwtAuthGuard } from './jwt-auth.guard';
       signOptions: { expiresIn: '1 day' },
     }),
     PassportModule,
+    MailModule,
   ],
   controllers: [AuthController],
   providers: [
     AuthService,
+    MailService,
     LocalStrategy,
     JwtStrategy,
     {

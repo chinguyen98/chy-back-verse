@@ -14,10 +14,15 @@ import { getDateFromStr, isValidDate } from 'src/shared/libs/daytime';
 import { RegisterCredentialsDto, AuthResponseDto, SigninCredentialsDto } from './auth.dto';
 import { ACCESS_TOKEN_PAYLOAD } from 'src/shared/types/user';
 import { User } from 'src/models/user.model';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private dataServices: IDataServices, private jwtService: JwtService) {}
+  constructor(
+    private readonly dataServices: IDataServices,
+    private readonly jwtService: JwtService,
+    private readonly mailService: MailService
+  ) {}
 
   async signUp(registerDto: RegisterCredentialsDto): Promise<AuthResponseDto> {
     const { date_of_birth, password, username, email, phone_number } = registerDto;
@@ -41,6 +46,7 @@ export class AuthService {
         updated_at: created_at,
         date_of_birth: dateOfBirth,
         phone_number,
+        isVerify: false,
       });
     } catch (err) {
       if (err.code === ErrorCode.CONFLICT_UNIQUE) {
@@ -48,6 +54,8 @@ export class AuthService {
       }
       throw new InternalServerErrorException();
     }
+
+    await this.mailService.sendVerifyAccountEmail(created_user.email, created_user.username);
 
     const accessTokenPayload: ACCESS_TOKEN_PAYLOAD = { username, sub: created_user.id };
     return { accessToken: await this.jwtService.signAsync(accessTokenPayload) };
