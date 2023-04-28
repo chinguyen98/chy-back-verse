@@ -21,7 +21,8 @@ export class BaseRepository<T extends BaseModel> implements IGenericRepository<T
   }
 
   async update(id: string, item: T): Promise<T> {
-    return await this._model.findByIdAndUpdate(id, item);
+    console.log({ id, item });
+    return await this._model.findOneAndUpdate({ id }, item);
   }
 
   async create(item: T): Promise<any> {

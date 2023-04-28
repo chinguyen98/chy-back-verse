@@ -10,7 +10,6 @@ import { MailService } from './mail.service';
       transport: {
         host: MAILER_CONFIG.HOST,
         port: MAILER_CONFIG.PORT,
-        ignoreTLS: true,
         secure: false,
         auth: {
           user: MAILER_CONFIG.USERNAME,

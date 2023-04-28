@@ -1,13 +1,6 @@
-import {
-  Body,
-  ClassSerializerInterceptor,
-  Controller,
-  Post,
-  UseInterceptors,
-  ValidationPipe,
-} from '@nestjs/common';
-import { VerificationService } from './verification.service';
+import { Body, Controller, Post, UnauthorizedException, ValidationPipe } from '@nestjs/common';
 import { ConfirmEmailDto } from './verification.dto';
+import { VerificationService } from './verification.service';
 
 @Controller('verification')
 // @UseInterceptors(ClassSerializerInterceptor)
@@ -16,7 +9,11 @@ export class VerificationController {
 
   @Post('email')
   async confirmEmail(@Body(ValidationPipe) confirmData: ConfirmEmailDto) {
-    const email = await this.verificationService.decodeConfirmationToken(confirmData.token);
-    await this.verificationService.confirmEmail(email);
+    try {
+      const email = await this.verificationService.decodeConfirmationToken(confirmData.token);
+      await this.verificationService.confirmEmail(email);
+    } catch (err) {
+      throw new UnauthorizedException();
+    }
   }
 }
