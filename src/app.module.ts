@@ -5,9 +5,15 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { DataModule } from './data/data.module';
 import { VerificationModule } from './verification/verification.module';
+import Config from './shared/configs';
 
 @Module({
-  imports: [DataModule, ConfigModule.forRoot({ isGlobal: true }), AuthModule, VerificationModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true, load: [() => Config] }),
+    DataModule,
+    AuthModule,
+    VerificationModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

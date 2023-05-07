@@ -1,14 +1,16 @@
-export const DB_CONFIG = {
-  MONGO_URL: process.env.MONGO_URL,
+const Config = {
+  db: {
+    mongoUrl: process.env.MONGO_URL,
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+  },
+  mailer: {
+    host: process.env.MAIL_HOST,
+    port: +process.env.MAIL_PORT,
+    username: process.env.MAIL_USERNAME,
+    password: process.env.MAIL_PASSWORD,
+  },
 };
 
-export const JWT_CONFIG = {
-  SECRET: process.env.JWT_SECRET,
-};
-
-export const MAILER_CONFIG = {
-  HOST: process.env.MAIL_HOST,
-  PORT: +process.env.MAIL_PORT,
-  USERNAME: process.env.MAIL_USERNAME,
-  PASSWORD: process.env.MAIL_PASSWORD,
-};
+export default Config;

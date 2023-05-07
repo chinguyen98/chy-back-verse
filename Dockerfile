@@ -2,10 +2,9 @@ FROM node:18-alpine
 
 WORKDIR /user/src/app
 
-COPY . .
+COPY --chown=node:node . .
 
-RUN yarn && \
-    yarn cache clean
+RUN rm -rf node_modules && yarn install --frozen-lockfile
 
 EXPOSE 3000
 
