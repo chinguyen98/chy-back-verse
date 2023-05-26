@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
 import { ResponseInterceptor } from './shared/interceptors/response.interceptor';
 
-const corsWhiteList = ['http://localhost:3000'];
+const corsWhiteList = ['http://localhost:3000', 'https://coliamai.uk'];
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
