@@ -50,7 +50,7 @@ export class AuthService {
       });
     } catch (err) {
       if (err.code === ErrorCode.CONFLICT_UNIQUE) {
-        throw new HttpException('Email is already been used!', HttpStatus.SEE_OTHER);
+        throw new HttpException('Email is already been used!', HttpStatus.CONFLICT);
       }
       throw new InternalServerErrorException();
     }
