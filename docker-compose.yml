@@ -9,6 +9,8 @@ services:
       - nest-mongo-network
     env_file:
       - .env
+    volumes:
+      - dbdata:/data/db
   nestjs-api:
     build:
       context: .
@@ -29,6 +31,7 @@ services:
 
 volumes:
   ignore:
+  dbdata:
 
 
 networks:
