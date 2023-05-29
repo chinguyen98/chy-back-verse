@@ -22,7 +22,7 @@ export class AuthController {
   }
 
   @Get('profile')
-  getProfile() {
-    return 'req.user';
+  getProfile(@Request() req) {
+    return req.user;
   }
 }
