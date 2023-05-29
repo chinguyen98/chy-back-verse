@@ -13,7 +13,7 @@ export class User extends BaseModel {
   @Expose()
   password: string;
 
-  @prop()
+  @prop({ unique: true })
   @Expose()
   email: string;
 

@@ -50,7 +50,10 @@ export class AuthService {
       });
     } catch (err) {
       if (err.code === ErrorCode.CONFLICT_UNIQUE) {
-        throw new HttpException('Username is already been used!', HttpStatus.CONFLICT);
+        throw new HttpException(
+          `Your ${Object.keys(err?.keyPattern)[0]} is already been used!`,
+          HttpStatus.CONFLICT
+        );
       }
       throw new InternalServerErrorException();
     }
