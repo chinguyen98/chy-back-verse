@@ -71,7 +71,7 @@ export class AuthService {
 
   async validateUser({ username, password }: SigninCredentialsDto): Promise<any> {
     const user = await this.dataServices.users.getBy({
-      $or: [{ email: username }, { phone_number: username }],
+      $or: [{ email: username }, { phone_number: username }, { username }],
     });
 
     if (!user) {
