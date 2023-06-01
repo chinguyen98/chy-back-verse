@@ -15,9 +15,9 @@ services:
     image: "redis:alpine"
     ports:
       - "6379:6379"
-    command: /bin/sh -c "redis-server --requirepass $$REDIS_PASS"
-    env_file:
-      - .env
+    # command: /bin/sh -c "redis-server --requirepass $$REDIS_PASS"
+    # env_file:
+    #   - .env
     volumes:
       - redis:/data
   redis-commander:
@@ -41,6 +41,7 @@ services:
       - ignore:/user/src/app/node_modules/
     depends_on:
       - mongo
+      - redis
     networks:
       - nest-mongo-network
     env_file:
