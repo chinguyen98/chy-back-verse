@@ -11,6 +11,23 @@ services:
       - .env
     volumes:
       - dbdata:/data/db
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    command: /bin/sh -c "redis-server --requirepass $$REDIS_PASS"
+    env_file:
+      - .env
+    volumes:
+      - redis:/data
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: ghcr.io/joeferner/redis-commander:latest
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081" 
   nestjs-api:
     build:
       context: .
@@ -32,6 +49,8 @@ services:
 volumes:
   ignore:
   dbdata:
+  redis:
+    driver: local
 
 
 networks:
