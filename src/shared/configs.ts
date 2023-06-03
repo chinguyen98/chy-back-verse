@@ -11,6 +11,9 @@ const Config = {
     username: process.env.MAIL_USERNAME,
     password: process.env.MAIL_PASSWORD,
   },
+  redis: {
+    url: process.env.REDIS_URI,
+  },
 };
 
 export default Config;
