@@ -83,4 +83,9 @@ export class AuthService {
 
     return user;
   }
+
+  async getUserByUsername(username: string): Promise<User> {
+    const user = await this.dataServices.users.getBy({ $or: [{ username }] });
+    return user;
+  }
 }
