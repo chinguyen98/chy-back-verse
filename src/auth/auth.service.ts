@@ -8,13 +8,13 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { MailService } from 'src/mail/mail.service';
+import { User } from 'src/models/user.model';
 import { IDataServices } from 'src/shared/core/data-services.abstract';
 import { ErrorCode } from 'src/shared/enums/error-code.enum';
-import { getDateFromStr, isValidDate } from 'src/shared/libs/daytime';
-import { RegisterCredentialsDto, AuthResponseDto, SigninCredentialsDto } from './auth.dto';
+import { getUnixtimeFromStr, isValidDate } from 'src/shared/libs/daytime';
 import { ACCESS_TOKEN_PAYLOAD } from 'src/shared/types/user';
-import { User } from 'src/models/user.model';
-import { MailService } from 'src/mail/mail.service';
+import { AuthResponseDto, RegisterCredentialsDto, SigninCredentialsDto } from './auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -33,7 +33,7 @@ export class AuthService {
 
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(password, salt);
-    const dateOfBirth = getDateFromStr(date_of_birth);
+    const dateOfBirth = getUnixtimeFromStr(date_of_birth);
     const created_at = new Date();
 
     let created_user: User;

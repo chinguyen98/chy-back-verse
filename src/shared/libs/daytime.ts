@@ -17,4 +17,8 @@ export const getDateFromStr = (strDate: string, strFormat = 'DD-MM-YYYY'): Date 
   return dayjs(strDate, strFormat).toDate();
 };
 
+export const getUnixtimeFromStr = (strDate: string, strFormat = 'DD-MM-YYYY') => {
+  return dayjs(strDate, strFormat).unix();
+};
+
 export default dayjs;

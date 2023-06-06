@@ -19,7 +19,7 @@ export class User extends BaseModel {
 
   @prop()
   @Expose()
-  date_of_birth: Date;
+  date_of_birth: number;
 
   @prop({})
   @Expose()
