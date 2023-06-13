@@ -34,7 +34,6 @@ export class AuthService {
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(password, salt);
     const dateOfBirth = getUnixtimeFromStr(date_of_birth);
-    const created_at = new Date();
 
     let created_user: User;
     try {
@@ -42,8 +41,6 @@ export class AuthService {
         username,
         password: hashPassword,
         email,
-        created_at,
-        updated_at: created_at,
         date_of_birth: dateOfBirth,
         phone_number,
         isVerify: false,

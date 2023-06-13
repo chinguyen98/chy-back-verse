@@ -6,11 +6,10 @@ import type { RedisClientOptions } from 'redis';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { BoardsModule } from './boards/boards.module';
 import { DataModule } from './data/data.module';
 import Config from './shared/configs';
 import { VerificationModule } from './verification/verification.module';
-import { ServersModule } from './servers/servers.module';
-import { BoardsModule } from './boards/boards.module';
 
 @Module({
   imports: [
@@ -25,7 +24,6 @@ import { BoardsModule } from './boards/boards.module';
     DataModule,
     AuthModule,
     VerificationModule,
-    ServersModule,
     BoardsModule,
   ],
   controllers: [AppController],

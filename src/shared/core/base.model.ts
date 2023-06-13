@@ -7,9 +7,9 @@ export abstract class BaseModel {
   @prop({ default: uuidv4() })
   id?: string;
 
-  @prop()
-  created_at: Date;
+  @prop({ default: new Date().getTime() })
+  created_at?: number;
 
-  @prop()
-  updated_at: Date;
+  @prop({ default: new Date().getTime() })
+  updated_at?: number;
 }
