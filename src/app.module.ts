@@ -10,6 +10,7 @@ import { DataModule } from './data/data.module';
 import Config from './shared/configs';
 import { VerificationModule } from './verification/verification.module';
 import { ServersModule } from './servers/servers.module';
+import { BoardsModule } from './boards/boards.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ServersModule } from './servers/servers.module';
     AuthModule,
     VerificationModule,
     ServersModule,
+    BoardsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
