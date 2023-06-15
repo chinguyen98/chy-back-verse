@@ -10,6 +10,7 @@ import { BoardsModule } from './boards/boards.module';
 import { DataModule } from './data/data.module';
 import Config from './shared/configs';
 import { VerificationModule } from './verification/verification.module';
+import { RefreshTokenModule } from './refresh-token/refresh-token.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { VerificationModule } from './verification/verification.module';
     AuthModule,
     VerificationModule,
     BoardsModule,
+    RefreshTokenModule,
   ],
   controllers: [AppController],
   providers: [AppService],
