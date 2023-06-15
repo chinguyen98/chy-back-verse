@@ -9,7 +9,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { MailService } from 'src/mail/mail.service';
-import { User } from 'src/models/user.model';
+import { User } from 'src/auth/user.model';
 import { IDataServices } from 'src/shared/core/data-services.abstract';
 import { ErrorCode } from 'src/shared/enums/error-code.enum';
 import { getUnixtimeFromStr, isValidDate } from 'src/shared/libs/daytime';

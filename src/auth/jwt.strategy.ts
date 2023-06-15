@@ -5,7 +5,7 @@ import { Cache } from 'cache-manager';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import Config from 'src/shared/configs';
 import { AuthService } from './auth.service';
-import { User } from 'src/models/user.model';
+import { User } from 'src/auth/user.model';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

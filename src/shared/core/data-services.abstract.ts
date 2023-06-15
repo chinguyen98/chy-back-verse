@@ -1,4 +1,4 @@
-import { User } from 'src/models/user.model';
+import { User } from 'src/auth/user.model';
 import { IGenericRepository } from './generic-repository.abstract';
 
 export abstract class IDataServices {
