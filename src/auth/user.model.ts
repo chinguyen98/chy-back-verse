@@ -1,4 +1,4 @@
-import { Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Schema } from '@nestjs/mongoose';
 import { ReturnModelType, getModelForClass, prop } from '@typegoose/typegoose';
 import { Expose } from 'class-transformer';
 import { BaseModel } from 'src/shared/core/base.model';
@@ -48,5 +48,3 @@ export class User extends BaseModel {
     return getModelForClass(User);
   }
 }
-
-export const UserSchema = SchemaFactory.createForClass(User);
