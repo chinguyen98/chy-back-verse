@@ -13,7 +13,7 @@ import { User } from 'src/auth/user.model';
 import { IDataServices } from 'src/shared/core/data-services.abstract';
 import { ErrorCode } from 'src/shared/enums/error-code.enum';
 import { getUnixtimeFromStr, isValidDate } from 'src/shared/libs/daytime';
-import { ACCESS_TOKEN_PAYLOAD } from 'src/shared/types/user';
+import { TOKEN_PAYLOAD } from 'src/shared/types/user';
 import { AuthResponseDto, RegisterCredentialsDto, SigninCredentialsDto } from './auth.dto';
 
 @Injectable()
@@ -57,13 +57,11 @@ export class AuthService {
 
     await this.mailService.sendVerifyAccountEmail(created_user.email, created_user.username);
 
-    const accessTokenPayload: ACCESS_TOKEN_PAYLOAD = { username, sub: created_user.id };
-    return { accessToken: await this.jwtService.signAsync(accessTokenPayload) };
+    return this.generateAccessAndRefreshToken(username);
   }
 
   async signIn(user: User): Promise<AuthResponseDto> {
-    const accessTokenPayload: ACCESS_TOKEN_PAYLOAD = { username: user.username, sub: user.id };
-    return { accessToken: await this.jwtService.signAsync(accessTokenPayload) };
+    return this.generateAccessAndRefreshToken(user.username);
   }
 
   async validateUser({ username, password }: SigninCredentialsDto): Promise<any> {
@@ -84,5 +82,15 @@ export class AuthService {
   async getUserByUsername(username: string): Promise<User> {
     const user = await this.dataServices.users.getBy({ $or: [{ username }] });
     return user;
+  }
+
+  async generateAccessAndRefreshToken(username: string): Promise<AuthResponseDto> {
+    const accessTokenPayload: TOKEN_PAYLOAD = { username };
+    const refreshTokenPayload: TOKEN_PAYLOAD = { username };
+
+    return {
+      accessToken: await this.jwtService.signAsync(accessTokenPayload),
+      refreshToken: await this.jwtService.signAsync(refreshTokenPayload),
+    };
   }
 }
