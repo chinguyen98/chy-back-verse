@@ -19,6 +19,13 @@ export class RefreshTokenService {
       expiresIn: '30 days',
     });
 
+    const user = await this.dataServices.users.getBy({ username });
+
+    await this.dataServices.refreshTokens.create({
+      token: refreshTokenStr,
+      user,
+    });
+
     return refreshTokenStr;
   }
 }

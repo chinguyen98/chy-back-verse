@@ -7,7 +7,7 @@ import { BaseModel } from 'src/shared/core/base.model';
 export class User extends BaseModel {
   @prop({ unique: true })
   @Expose()
-  username: string;
+  public username: string;
 
   @prop()
   @Expose()

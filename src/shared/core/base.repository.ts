@@ -26,7 +26,8 @@ export class BaseRepository<T extends BaseModel> implements IGenericRepository<T
   }
 
   async create(item: T): Promise<any> {
-    return this._model.create(item);
+    const data = this._model.create(item);
+    return data;
   }
 
   async getAll(): Promise<T[]> {

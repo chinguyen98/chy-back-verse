@@ -5,34 +5,37 @@ import { BaseModel } from 'src/shared/core/base.model';
 
 @Schema()
 export class RefreshToken extends BaseModel {
-  @prop({ ref: () => User })
-  user: Ref<User>;
+  @prop({
+    ref: () => User,
+    autopopulate: true,
+  })
+  user!: User;
 
   @prop()
   token: string;
 
   @prop()
-  expired_time: number;
+  expired_time?: number;
 
   @prop()
-  created_by_id: string;
+  created_by_id?: string;
 
   @prop()
-  revoked_time: number;
+  revoked_time?: number;
 
   @prop()
-  revoked_by_id: string;
+  revoked_by_id?: string;
 
   @prop()
-  replaced_by_id: string;
+  replaced_by_id?: string;
 
-  public get isTokenExpired() {
-    return new Date().getTime() > this.expired_time;
-  }
+  // public get isTokenExpired() {
+  //   return new Date().getTime() > this.expired_time;
+  // }
 
-  public get isTokenActive() {
-    return !this.isTokenExpired && !this.revoked_time;
-  }
+  // public get isTokenActive() {
+  //   return !this.isTokenExpired && !this.revoked_time;
+  // }
 
   static get model(): ReturnModelType<typeof RefreshToken> {
     return getModelForClass(RefreshToken);
