@@ -15,13 +15,15 @@ import { ErrorCode } from 'src/shared/enums/error-code.enum';
 import { getUnixtimeFromStr, isValidDate } from 'src/shared/libs/daytime';
 import { TOKEN_PAYLOAD } from 'src/shared/types/user';
 import { AuthResponseDto, RegisterCredentialsDto, SigninCredentialsDto } from './auth.dto';
+import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly dataServices: IDataServices,
     private readonly jwtService: JwtService,
-    private readonly mailService: MailService
+    private readonly mailService: MailService,
+    private readonly refreshTokenService: RefreshTokenService
   ) {}
 
   async signUp(registerDto: RegisterCredentialsDto): Promise<AuthResponseDto> {
@@ -86,11 +88,10 @@ export class AuthService {
 
   async generateAccessAndRefreshToken(username: string): Promise<AuthResponseDto> {
     const accessTokenPayload: TOKEN_PAYLOAD = { username };
-    const refreshTokenPayload: TOKEN_PAYLOAD = { username };
 
     return {
       accessToken: await this.jwtService.signAsync(accessTokenPayload),
-      refreshToken: await this.jwtService.signAsync(refreshTokenPayload),
+      refreshToken: await this.refreshTokenService.generateRefreshToken(username),
     };
   }
 }
