@@ -26,14 +26,12 @@ export class RefreshToken extends BaseModel {
   @prop()
   replaced_by_id: string;
 
-  @prop()
-  public get isExpired() {
+  public get isTokenExpired() {
     return new Date().getTime() > this.expired_time;
   }
 
-  @prop()
-  public get isActive() {
-    return !this.isExpired && !this.revoked_time;
+  public get isTokenActive() {
+    return !this.isTokenExpired && !this.revoked_time;
   }
 
   static get model(): ReturnModelType<typeof RefreshToken> {

@@ -14,9 +14,11 @@ export class RefreshTokenService {
   async generateRefreshToken(username: string) {
     const refreshTokenPayload: TOKEN_PAYLOAD = { username };
 
-    return this.jwtService.signAsync(refreshTokenPayload, {
+    const refreshTokenStr = await this.jwtService.signAsync(refreshTokenPayload, {
       secret: Config.jwt.refreshTokenSecret,
       expiresIn: '30 days',
     });
+
+    return refreshTokenStr;
   }
 }
