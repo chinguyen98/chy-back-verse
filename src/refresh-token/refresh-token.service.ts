@@ -19,11 +19,16 @@ export class RefreshTokenService {
       expiresIn: '30 days',
     });
 
+    const decodeToken = this.jwtService.decode(refreshTokenStr, {
+      json: true,
+    }) as TOKEN_PAYLOAD;
+
     const user = await this.dataServices.users.getBy({ username });
 
     await this.dataServices.refreshTokens.create({
       token: refreshTokenStr,
       user,
+      expired_time: decodeToken?.exp,
     });
 
     return refreshTokenStr;
