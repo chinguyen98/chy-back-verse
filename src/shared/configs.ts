@@ -14,6 +14,10 @@ const Config = {
   },
   redis: {
     url: process.env.REDIS_URI,
+    host: process.env.REDIS_HOSTNAME,
+    port: process.env.REDIS_PORT,
+    username: process.env.REDIS_USERNAME,
+    password: process.env.REDIS_PASS,
   },
 };
 

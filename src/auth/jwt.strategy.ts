@@ -24,6 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const username = payload.username;
 
     const cacheUser = await this.cacheService.get(`user:${username}`);
+    console.log({ cacheUser });
     if (cacheUser) {
       return cacheUser;
     }

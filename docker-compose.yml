@@ -30,9 +30,9 @@ services:
     depends_on:
       - redis
     env_file:
-      - .env
+      - .env.rediscd
     ports:
-      - "8081:8081" 
+      - "8081:8081"
     networks:
       - shared-network
   nestjs-api:
@@ -59,7 +59,6 @@ volumes:
   dbdata:
   redis:
     driver: local
-
 
 networks:
   shared-network:
