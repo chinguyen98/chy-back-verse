@@ -1,16 +1,16 @@
 import { Schema } from '@nestjs/mongoose';
 import { ReturnModelType, getModelForClass, prop } from '@typegoose/typegoose';
-import { Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import { BaseModel } from 'src/shared/core/base.model';
 
 @Schema()
+@Exclude()
 export class User extends BaseModel {
   @prop({ unique: true })
   @Expose()
   public username: string;
 
   @prop()
-  @Expose()
   password: string;
 
   @prop({ unique: true })
