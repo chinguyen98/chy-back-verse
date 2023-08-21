@@ -37,9 +37,10 @@ export class User extends BaseModel {
   @Expose()
   isVerify?: boolean;
 
-  @prop()
   @Expose()
-  fullName?: string = `${this.firstName} ${this.lastName}`;
+  fullName?() {
+    return `${this.firstName} ${this.lastName}`;
+  }
 
   @prop()
   salt?: string;

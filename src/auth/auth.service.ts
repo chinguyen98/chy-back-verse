@@ -27,7 +27,7 @@ export class AuthService {
   ) {}
 
   async signUp(registerDto: RegisterCredentialsDto): Promise<AuthResponseDto> {
-    const { date_of_birth, password, username, email, phone_number } = registerDto;
+    const { date_of_birth, password, username, email, phone_number,  firstName, lastName } = registerDto;
 
     if (!isValidDate({ date: date_of_birth })) {
       throw new NotAcceptableException('Date is not valid');
@@ -46,6 +46,8 @@ export class AuthService {
         date_of_birth: dateOfBirth,
         phone_number,
         isVerify: false,
+        firstName,
+        lastName,
       });
     } catch (err) {
       if (err.code === ErrorCode.CONFLICT_UNIQUE) {

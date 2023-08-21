@@ -1,21 +1,18 @@
 import {
   Body,
-  ClassSerializerInterceptor,
   Controller,
   Get,
   Post,
   Request,
-  SerializeOptions,
   UseGuards,
-  UseInterceptors,
-  ValidationPipe,
+  ValidationPipe
 } from '@nestjs/common';
+import { plainToClass } from 'class-transformer';
 import { Public } from 'src/shared/decorators/skip-auth.decorator';
 import { AuthResponseDto, RegisterCredentialsDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local-auth.guard';
 import { User } from './user.model';
-import { instanceToPlain, plainToClass } from 'class-transformer';
 
 @Controller('auth')
 export class AuthController {
@@ -40,7 +37,6 @@ export class AuthController {
 
     if (user) {
       return plainToClass(User, user);
-      // return instanceToPlain(user);
     }
 
     return null;

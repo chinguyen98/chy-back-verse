@@ -19,6 +19,12 @@ export class RegisterCredentialsDto {
 
   @IsString()
   date_of_birth: string;
+
+  @IsString()
+  firstName: string;
+
+  @IsString()
+  lastName: string;
 }
 
 export class SigninCredentialsDto {

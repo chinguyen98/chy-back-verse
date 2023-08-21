@@ -31,7 +31,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     const user = await this.authService.getUserByUsername(username);
     if (user) {
-      // await this.cacheService.set(`user:${username}`, user, 60000 * 60 * 60 * 24);
+      await this.cacheService.set(`user:${username}`, user, 60000 * 60 * 60 * 24);
       return user;
     }
 
