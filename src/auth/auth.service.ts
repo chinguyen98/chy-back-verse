@@ -27,7 +27,8 @@ export class AuthService {
   ) {}
 
   async signUp(registerDto: RegisterCredentialsDto): Promise<AuthResponseDto> {
-    const { date_of_birth, password, username, email, phone_number,  firstName, lastName } = registerDto;
+    const { date_of_birth, password, username, email, phone_number, firstName, lastName } =
+      registerDto;
 
     if (!isValidDate({ date: date_of_birth })) {
       throw new NotAcceptableException('Date is not valid');
@@ -94,6 +95,13 @@ export class AuthService {
     return {
       accessToken: await this.jwtService.signAsync(accessTokenPayload),
       refreshToken: await this.refreshTokenService.generateRefreshToken(username),
+    };
+  }
+
+  async refreshToken(): Promise<AuthResponseDto> {
+    return {
+      accessToken: '',
+      refreshToken: '',
     };
   }
 }

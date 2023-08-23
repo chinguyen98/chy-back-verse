@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Request,
-  UseGuards,
-  ValidationPipe
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseGuards, ValidationPipe } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { Public } from 'src/shared/decorators/skip-auth.decorator';
 import { AuthResponseDto, RegisterCredentialsDto } from './auth.dto';
@@ -29,6 +21,12 @@ export class AuthController {
   @Post('sign-in')
   signIn(@Request() req) {
     return this.authService.signIn(req.user);
+  }
+
+  @Public()
+  @Post('refresh-token')
+  refreshToken() {
+    return this.authService.refreshToken();
   }
 
   @Get('profile')
