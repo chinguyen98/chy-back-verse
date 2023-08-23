@@ -21,8 +21,6 @@ export class MailService {
         template,
         context,
       });
-
-      console.log('Send mail successfully!');
     } catch (err) {
       console.error(err);
     }

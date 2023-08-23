@@ -15,7 +15,6 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))
   app.enableCors({
     origin: (origin, callback) => {
-      console.log({ origin, callback });
       if (!origin || corsWhiteList.indexOf(origin) !== -1) {
         callback(null, true);
       } else {
