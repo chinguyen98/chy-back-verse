@@ -5,6 +5,7 @@ import { AuthResponseDto, RegisterCredentialsDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local-auth.guard';
 import { User } from './user.model';
+import JwtRefreshGuard from './jwt-refresh-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -24,7 +25,8 @@ export class AuthController {
   }
 
   @Public()
-  @Post('refresh-token')
+  @UseGuards(JwtRefreshGuard)
+  @Post('refresh')
   refreshToken() {
     return this.authService.refreshToken();
   }

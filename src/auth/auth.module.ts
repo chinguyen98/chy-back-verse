@@ -10,6 +10,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 import { JwtStrategy } from './jwt.strategy';
 import { LocalStrategy } from './local.strategy';
 import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
+import { JwtRefreshStrategy } from './jwt-refresh.strategy';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
     MailService,
     LocalStrategy,
     JwtStrategy,
+    JwtRefreshStrategy,
     RefreshTokenService,
     {
       provide: 'APP_GUARD',
