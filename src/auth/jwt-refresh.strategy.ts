@@ -12,11 +12,7 @@ export class JwtRefreshStrategy extends PassportStrategy(Strategy, 'jwt-refresh'
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request) => {
           const data = request?.cookies[AUTH_COOKIE];
-          if (data) {
-            return data?.token;
-          }
-
-          return null;
+          return data;
         },
       ]),
       secretOrKey: Config.jwt.refreshTokenSecret,
