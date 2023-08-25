@@ -26,23 +26,23 @@ export class AuthController {
   @Post('sign-up')
   async signUp(
     @Body(ValidationPipe) registerdto: RegisterCredentialsDto,
-    @Response() res: AppResponse
+    @Response({ passthrough: true }) res: AppResponse
   ): Promise<AuthResponseDto> {
     const data = await this.authService.signUp(registerdto);
     res.setHeader(AUTH_COOKIE, data.refreshToken);
-    return {
-      accessToken: data.accessToken,
-    };
+    return data;
   }
 
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('sign-in')
-  async signIn(@Request() req, @Response() res: AppResponse): Promise<AuthResponseDto> {
+  async signIn(
+    @Request() req,
+    @Response({ passthrough: true }) res: AppResponse
+  ): Promise<AuthResponseDto> {
     const data = await this.authService.signIn(req.user);
-    console.log({ data });
-    // res.setHeader(AUTH_COOKIE, data.refreshToken);
-    return { accessToken: data.accessToken };
+    res.setHeader(AUTH_COOKIE, data.refreshToken);
+    return data;
   }
 
   @Public()
