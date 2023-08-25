@@ -48,13 +48,13 @@ export class AuthController {
   @Public()
   @UseGuards(JwtRefreshGuard)
   @Post('refresh')
-  refreshToken() {
+  refreshToken(@Request() req: AppRequest) {
     return this.authService.refreshToken();
   }
 
   @Get('profile')
   async getProfile(@Request() req: AppRequest): Promise<Partial<User> | null> {
-    const user = req.user as User;
+    const user = req.user;
 
     if (user) {
       return plainToClass(User, user);
