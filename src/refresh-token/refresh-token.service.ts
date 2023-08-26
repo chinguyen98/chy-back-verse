@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import Config from 'src/shared/configs';
 import { IDataServices } from 'src/shared/core/data-services.abstract';
@@ -28,9 +28,19 @@ export class RefreshTokenService {
     await this.dataServices.refreshTokens.create({
       token: refreshTokenStr,
       user,
-      expired_time: decodeToken?.exp,
+      expired_time: decodeToken?.exp * 1000,
     });
 
     return refreshTokenStr;
+  }
+
+  async getRefreshToken(refreshToken: string) {
+    const refreshTokenData = await this.dataServices.refreshTokens.getBy({ token: refreshToken });
+
+    if (!refreshTokenData || !refreshTokenData.isTokenActive()) {
+      throw new HttpException('Invalid refresh token', HttpStatus.BAD_REQUEST);
+    }
+
+    return refreshTokenData;
   }
 }

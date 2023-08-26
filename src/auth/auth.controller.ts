@@ -49,6 +49,7 @@ export class AuthController {
   @UseGuards(JwtRefreshGuard)
   @Post('refresh')
   refreshToken(@Request() req: AppRequest) {
+    console.log('ecec', req.cookies, req.user);
     return this.authService.refreshToken();
   }
 
