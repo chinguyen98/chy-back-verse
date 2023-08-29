@@ -8,14 +8,14 @@ import { RefreshToken } from 'src/refresh-token/refresh-token.model';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: User.name, schema: User.model.schema },
-      { name: RefreshToken.name, schema: RefreshToken.model.schema },
-    ]),
     MongooseModule.forRoot(Config.db.mongoUrl, {
       retryDelay: 500,
       retryAttempts: 3,
     }),
+    MongooseModule.forFeature([
+      { name: User.name, schema: User.model.schema },
+      { name: RefreshToken.name, schema: RefreshToken.model.schema },
+    ]),
   ],
   providers: [{ provide: IDataServices, useClass: MongoDataService }],
   exports: [IDataServices],
