@@ -49,13 +49,13 @@ export class AuthController {
   @UseGuards(JwtRefreshGuard)
   @Post('refresh')
   refreshToken(@Request() req: AppRequest) {
-    console.log('ecec', req.cookies, req.user);
+    console.log('ecec', req.cookies, req.user.refreshToken);
     return this.authService.refreshToken();
   }
 
   @Get('profile')
   async getProfile(@Request() req: AppRequest): Promise<Partial<User> | null> {
-    const user = req.user;
+    const user = req.user.data;
 
     if (user) {
       return plainToClass(User, user);

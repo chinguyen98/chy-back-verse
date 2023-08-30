@@ -4,7 +4,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
 import Config from 'src/shared/configs';
 import { AUTH_COOKIE } from 'src/shared/constants';
-import { AppRequest } from 'src/shared/types/app';
+import { AppRequest, UserRequestData } from 'src/shared/types/app';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -26,13 +26,15 @@ export class JwtRefreshStrategy extends PassportStrategy(Strategy, 'jwt-refresh'
     });
   }
 
-  async validate(req: AppRequest) {
+  async validate(req: AppRequest): Promise<UserRequestData> {
     const refreshTokenData = await this.refreshTokenService.getRefreshToken(
       req.cookies[AUTH_COOKIE]
     );
 
     if (refreshTokenData) {
-      return refreshTokenData;
+      return {
+        refreshToken: refreshTokenData,
+      };
     }
 
     return null;
