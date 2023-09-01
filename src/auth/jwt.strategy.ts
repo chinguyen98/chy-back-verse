@@ -6,6 +6,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import Config from 'src/shared/configs';
 import type { UserRequestData } from 'src/shared/types/app';
 import { AuthService } from './auth.service';
+import { User } from './user.model';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -23,9 +24,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: any): Promise<UserRequestData> {
     const username = payload.username;
 
-    const cacheUser = await this.cacheService.get(`user:${username}`);
+    const cacheUser: User = await this.cacheService.get(`user:${username}`);
+
     if (cacheUser) {
-      return cacheUser;
+      return {
+        data: cacheUser,
+      };
     }
 
     const user = await this.authService.getUserByUsername(username);
