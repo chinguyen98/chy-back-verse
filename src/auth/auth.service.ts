@@ -8,14 +8,14 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { MailService } from 'src/mail/mail.service';
 import { User } from 'src/auth/user.model';
+import { MailService } from 'src/mail/mail.service';
+import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
 import { IDataServices } from 'src/shared/core/data-services.abstract';
 import { ErrorCode } from 'src/shared/enums/error-code.enum';
 import { getUnixtimeFromStr, isValidDate } from 'src/shared/libs/daytime';
 import { TOKEN_PAYLOAD } from 'src/shared/types/user';
 import { AuthResponseDto, RegisterCredentialsDto, SigninCredentialsDto } from './auth.dto';
-import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
 
 @Injectable()
 export class AuthService {
@@ -95,13 +95,6 @@ export class AuthService {
     return {
       accessToken: await this.jwtService.signAsync(accessTokenPayload),
       refreshToken: await this.refreshTokenService.generateRefreshToken(username),
-    };
-  }
-
-  async refreshToken(): Promise<AuthResponseDto> {
-    return {
-      accessToken: '',
-      refreshToken: '',
     };
   }
 }

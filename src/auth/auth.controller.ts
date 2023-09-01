@@ -17,10 +17,14 @@ import JwtRefreshGuard from './jwt-refresh-auth.guard';
 import { LocalAuthGuard } from './local-auth.guard';
 import { User } from './user.model';
 import { AUTH_COOKIE } from 'src/shared/constants';
+import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly refreshTokenService: RefreshTokenService
+  ) {}
 
   @Public()
   @Post('sign-up')
@@ -49,8 +53,7 @@ export class AuthController {
   @UseGuards(JwtRefreshGuard)
   @Post('refresh')
   refreshToken(@Request() req: AppRequest) {
-    console.log('ecec', req.cookies, req.user.refreshToken);
-    return this.authService.refreshToken();
+    return this.refreshTokenService.regenerateRefreshToken(req.user.refreshToken);
   }
 
   @Get('profile')
