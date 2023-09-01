@@ -16,15 +16,15 @@ export abstract class BaseModel {
 
   public __v?: number;
 
-  @prop({ default: uuidv4() })
+  @prop({ default: () => uuidv4() })
   @Expose()
   id?: string;
 
-  @prop({ default: new Date().getTime() })
+  @prop({ default: () => new Date().getTime() })
   @Expose()
   created_at?: number;
 
-  @prop({ default: new Date().getTime() })
+  @prop({ default: () => new Date().getTime() })
   @Expose()
   updated_at?: number;
 }

@@ -52,8 +52,19 @@ export class AuthController {
   @Public()
   @UseGuards(JwtRefreshGuard)
   @Post('refresh')
-  refreshToken(@Request() req: AppRequest) {
-    return this.refreshTokenService.regenerateRefreshToken(req.user.refreshToken);
+  async refreshToken(
+    @Request() req: AppRequest,
+    @Response({ passthrough: true }) res: AppResponse
+  ): Promise<AuthResponseDto> {
+    const oldRefreshToken = req.user.refreshToken;
+
+    const refreshToken = await this.refreshTokenService.regenerateRefreshToken(oldRefreshToken);
+    const accessToken = await this.authService.generateAccessToken(oldRefreshToken.user.username);
+    res.setHeader(AUTH_COOKIE, refreshToken);
+    return {
+      accessToken,
+      refreshToken,
+    };
   }
 
   @Get('profile')

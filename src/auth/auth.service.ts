@@ -97,4 +97,9 @@ export class AuthService {
       refreshToken: await this.refreshTokenService.generateRefreshToken(username),
     };
   }
+
+  async generateAccessToken(username: string): Promise<string> {
+    const accessTokenPayload: TOKEN_PAYLOAD = { username };
+    return await this.jwtService.signAsync(accessTokenPayload);
+  }
 }
