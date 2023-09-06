@@ -1,16 +1,18 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AuthResponseDto } from 'src/auth/auth.dto';
 import Config from 'src/shared/configs';
 import { IDataServices } from 'src/shared/core/data-services.abstract';
 import { TOKEN_PAYLOAD } from 'src/shared/types/user';
 import { RefreshToken } from './refresh-token.model';
+import { REQUEST } from '@nestjs/core';
+import { AppRequest } from 'src/shared/types/app';
 
 @Injectable()
 export class RefreshTokenService {
   constructor(
     private readonly dataServices: IDataServices,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    @Inject(REQUEST) private readonly req: AppRequest
   ) {}
 
   private async generateTokenString(username: string) {
@@ -37,13 +39,13 @@ export class RefreshTokenService {
       token: refreshTokenStr,
       user,
       expired_time: decodeToken?.exp * 1000,
+      created_by_ip: this.req.ip,
     });
 
     return refreshTokenStr;
   }
 
   async regenerateRefreshToken(oldRefreshToken: RefreshToken): Promise<string> {
-    console.log({ oldRefreshToken });
     const refreshTokenStr = await this.generateTokenString(oldRefreshToken.user.username);
 
     const decodeToken = this.jwtService.decode(refreshTokenStr, {
@@ -56,6 +58,7 @@ export class RefreshTokenService {
       updated_at: time,
       replaced_by_token: oldRefreshToken.token,
       revoked_time: time,
+      revoked_by_ip: this.req.ip,
     });
 
     await this.dataServices.refreshTokens.create({
