@@ -1,18 +1,15 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import Config from 'src/shared/configs';
 import { IDataServices } from 'src/shared/core/data-services.abstract';
 import { TOKEN_PAYLOAD } from 'src/shared/types/user';
 import { RefreshToken } from './refresh-token.model';
-import { REQUEST } from '@nestjs/core';
-import { AppRequest } from 'src/shared/types/app';
 
 @Injectable()
 export class RefreshTokenService {
   constructor(
     private readonly dataServices: IDataServices,
-    private readonly jwtService: JwtService,
-    @Inject(REQUEST) private readonly req: AppRequest
+    private readonly jwtService: JwtService
   ) {}
 
   private async generateTokenString(username: string) {
