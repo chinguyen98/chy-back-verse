@@ -26,7 +26,7 @@ export class AuthService {
     private readonly refreshTokenService: RefreshTokenService
   ) {}
 
-  async signUp(registerDto: RegisterCredentialsDto): Promise<AuthResponseDto> {
+  async signUp(registerDto: RegisterCredentialsDto, ip: string): Promise<AuthResponseDto> {
     const { date_of_birth, password, username, email, phone_number, firstName, lastName } =
       registerDto;
 
@@ -62,11 +62,11 @@ export class AuthService {
 
     await this.mailService.sendVerifyAccountEmail(created_user.email, created_user.username);
 
-    return this.generateAccessAndRefreshToken(username);
+    return this.generateAccessAndRefreshToken(username, ip);
   }
 
-  async signIn(user: User): Promise<AuthResponseDto> {
-    return this.generateAccessAndRefreshToken(user.username);
+  async signIn(user: User, ip: string): Promise<AuthResponseDto> {
+    return this.generateAccessAndRefreshToken(user.username, ip);
   }
 
   async validateUser({ username, password }: SigninCredentialsDto): Promise<any> {
@@ -89,12 +89,12 @@ export class AuthService {
     return user;
   }
 
-  async generateAccessAndRefreshToken(username: string): Promise<AuthResponseDto> {
+  async generateAccessAndRefreshToken(username: string, ip: string): Promise<AuthResponseDto> {
     const accessTokenPayload: TOKEN_PAYLOAD = { username };
 
     return {
       accessToken: await this.jwtService.signAsync(accessTokenPayload),
-      refreshToken: await this.refreshTokenService.generateRefreshToken(username),
+      refreshToken: await this.refreshTokenService.generateRefreshToken(username, ip),
     };
   }
 

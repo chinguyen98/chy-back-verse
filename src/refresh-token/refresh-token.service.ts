@@ -26,7 +26,7 @@ export class RefreshTokenService {
     return refreshTokenStr;
   }
 
-  async generateRefreshToken(username: string) {
+  async generateRefreshToken(username: string, ip: string) {
     const refreshTokenStr = await this.generateTokenString(username);
 
     const decodeToken = this.jwtService.decode(refreshTokenStr, {
@@ -39,13 +39,13 @@ export class RefreshTokenService {
       token: refreshTokenStr,
       user,
       expired_time: decodeToken?.exp * 1000,
-      created_by_ip: this.req.ip,
+      created_by_ip: ip,
     });
 
     return refreshTokenStr;
   }
 
-  async regenerateRefreshToken(oldRefreshToken: RefreshToken): Promise<string> {
+  async regenerateRefreshToken(oldRefreshToken: RefreshToken, ip: string): Promise<string> {
     const refreshTokenStr = await this.generateTokenString(oldRefreshToken.user.username);
 
     const decodeToken = this.jwtService.decode(refreshTokenStr, {
@@ -58,13 +58,14 @@ export class RefreshTokenService {
       updated_at: time,
       replaced_by_token: oldRefreshToken.token,
       revoked_time: time,
-      revoked_by_ip: this.req.ip,
+      revoked_by_ip: ip,
     });
 
     await this.dataServices.refreshTokens.create({
       token: refreshTokenStr,
       user: oldRefreshToken.user,
       expired_time: decodeToken?.exp * 1000,
+      created_by_ip: ip,
     });
 
     return refreshTokenStr;

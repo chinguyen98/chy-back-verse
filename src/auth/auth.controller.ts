@@ -30,9 +30,10 @@ export class AuthController {
   @Post('sign-up')
   async signUp(
     @Body(ValidationPipe) registerdto: RegisterCredentialsDto,
-    @Response({ passthrough: true }) res: AppResponse
+    @Response({ passthrough: true }) res: AppResponse,
+    @Request() req: AppRequest
   ): Promise<AuthResponseDto> {
-    const data = await this.authService.signUp(registerdto);
+    const data = await this.authService.signUp(registerdto, req.ip);
     res.setHeader(AUTH_COOKIE, data.refreshToken);
     return data;
   }
@@ -41,10 +42,10 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('sign-in')
   async signIn(
-    @Request() req,
-    @Response({ passthrough: true }) res: AppResponse
+    @Response({ passthrough: true }) res: AppResponse,
+    @Request() req: AppRequest
   ): Promise<AuthResponseDto> {
-    const data = await this.authService.signIn(req.user);
+    const data = await this.authService.signIn(req.user.data, req.ip);
     res.setHeader(AUTH_COOKIE, data.refreshToken);
     return data;
   }
@@ -58,7 +59,10 @@ export class AuthController {
   ): Promise<AuthResponseDto> {
     const oldRefreshToken = req.user.refreshToken;
 
-    const refreshToken = await this.refreshTokenService.regenerateRefreshToken(oldRefreshToken);
+    const refreshToken = await this.refreshTokenService.regenerateRefreshToken(
+      oldRefreshToken,
+      req.ip
+    );
     const accessToken = await this.authService.generateAccessToken(oldRefreshToken.user.username);
     res.setHeader(AUTH_COOKIE, refreshToken);
     return {
