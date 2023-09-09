@@ -1,8 +1,6 @@
-import { CacheModule } from '@nestjs/cache-manager';
+import { RedisModule } from '@nestjs-modules/ioredis';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { redisStore } from 'cache-manager-ioredis-yet';
-import type { CommonRedisOptions } from 'ioredis';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -15,15 +13,12 @@ import { VerificationModule } from './verification/verification.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [() => Config] }),
-    CacheModule.registerAsync<CommonRedisOptions>({
-      isGlobal: true,
-      useFactory: () => ({
-        store: redisStore,
+    RedisModule.forRoot({
+      config: {
         username: Config.redis.username,
         password: Config.redis.password,
         host: Config.redis.host,
-        port: Config.redis.port,
-      }),
+      },
     }),
     DataModule,
     AuthModule,

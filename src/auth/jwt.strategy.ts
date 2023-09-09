@@ -1,7 +1,6 @@
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Inject, Injectable } from '@nestjs/common';
+import { InjectRedis, Redis } from '@nestjs-modules/ioredis';
+import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Cache } from 'cache-manager';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import Config from 'src/shared/configs';
 import type { UserRequestData } from 'src/shared/types/app';
@@ -11,7 +10,7 @@ import { User } from './user.model';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
-    @Inject(CACHE_MANAGER) private cacheService: Cache,
+    @InjectRedis() private readonly redis: Redis,
     private readonly authService: AuthService
   ) {
     super({
@@ -24,7 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: any): Promise<UserRequestData> {
     const username = payload.username;
 
-    const cacheUser: User = await this.cacheService.get(`user:${username}`);
+    const cacheUser: User = JSON.parse(await this.redis.get(`user:${username}`));
 
     if (cacheUser) {
       return {
@@ -34,7 +33,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     const user = await this.authService.getUserByUsername(username);
     if (user) {
-      await this.cacheService.set(`user:${username}`, user, 60000 * 60 * 60 * 24);
+      await this.redis.set(`user:${username}`, JSON.stringify(user), 'EX', 60 * 60 * 24 * 30 * 12);
       return {
         data: user,
       };
