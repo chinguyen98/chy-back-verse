@@ -18,7 +18,10 @@ import { LocalAuthGuard } from './local-auth.guard';
 import { User } from './user.model';
 import { AUTH_COOKIE } from 'src/shared/constants';
 import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -28,6 +31,8 @@ export class AuthController {
 
   @Public()
   @Post('sign-up')
+  @ApiOperation({ summary: 'Sign up a user' })
+  @ApiResponse({})
   async signUp(
     @Body(ValidationPipe) registerdto: RegisterCredentialsDto,
     @Response({ passthrough: true }) res: AppResponse,
@@ -41,6 +46,8 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('sign-in')
+  @ApiOperation({ summary: 'Sign in a user' })
+  @ApiResponse({})
   async signIn(
     @Response({ passthrough: true }) res: AppResponse,
     @Request() req: AppRequest

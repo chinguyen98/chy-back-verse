@@ -34,7 +34,7 @@
     "@nestjs/mongoose": "^9.2.2",
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.0.0",
-    "@nestjs/swagger": "^6.3.0",
+    "@nestjs/swagger": "^7.1.11",
     "@nestjs/typeorm": "^9.0.1",
     "@typegoose/typegoose": "^11.0.0",
     "bcrypt": "^5.1.0",
