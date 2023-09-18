@@ -35,27 +35,27 @@ services:
       - "8081:8081"
     networks:
       - shared-network
-  nestjs-api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: development
-    command: yarn start:dev
-    ports:
-      - '6006:3000'
-    volumes:
-      - ./src:/user/src/app/src
-      - ignore:/user/src/app/node_modules/
-    depends_on:
-      - mongo
-      - redis
-    networks:
-      - shared-network
-    env_file:
-      - .env
+  # nestjs-api:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     target: development
+  #   command: yarn start:dev
+  #   ports:
+  #     - '6006:3000'
+  #   volumes:
+  #     - ./src:/user/src/app/src
+  #     - ignore:/user/src/app/node_modules/
+  #   depends_on:
+  #     - mongo
+  #     - redis
+  #   networks:
+  #     - shared-network
+  #   env_file:
+  #     - .env
 
 volumes:
-  ignore:
+  # ignore:
   dbdata:
   redis:
     driver: local
