@@ -23,9 +23,9 @@ import { PostsModule } from './posts/posts.module';
         host: Config.redis.host,
       },
     }),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
-    }),
+    // GraphQLModule.forRoot<ApolloDriverConfig>({
+    //   driver: ApolloDriver,
+    // }),
     DataModule,
     AuthModule,
     VerificationModule,
