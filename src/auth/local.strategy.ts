@@ -4,6 +4,8 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { UserRequestData } from 'src/shared/types/app';
 import { AuthService } from './auth.service';
+import { plainToClass } from 'class-transformer';
+import { User } from './user.model';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -18,7 +20,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     });
 
     return {
-      data: user,
+      data: plainToClass(User, user),
     };
   }
 }

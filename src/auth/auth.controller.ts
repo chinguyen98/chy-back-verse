@@ -51,10 +51,8 @@ export class AuthController {
   async signIn(
     @Response({ passthrough: true }) res: AppResponse,
     @Request() req: AppRequest
-  ): Promise<AuthResponseDto> {
-    const data = await this.authService.signIn(req.user.data, req.ip);
-    res.setHeader(AUTH_COOKIE, data.refreshToken);
-    return data;
+  ): Promise<User> {
+    return req.user.data;
   }
 
   @Public()
