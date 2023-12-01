@@ -23,17 +23,17 @@ services:
       - redis:/data
     networks:
       - shared-network
-  redis-commander:
-    hostname: redis-commander
-    image: ghcr.io/joeferner/redis-commander:latest
-    depends_on:
-      - redis
-    env_file:
-      - .env.rediscd
-    ports:
-      - "8081:8081"
-    networks:
-      - shared-network
+  # redis-commander:
+  #   hostname: redis-commander
+  #   image: ghcr.io/joeferner/redis-commander:latest
+  #   depends_on:
+  #     - redis
+  #   env_file:
+  #     - .env.rediscd
+  #   ports:
+  #     - "8081:8081"
+  #   networks:
+  #     - shared-network
   # elasticsearch:
   #   container_name: es-container
   #   image: docker.elastic.co/elasticsearch/elasticsearch:8.2.2
