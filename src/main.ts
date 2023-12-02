@@ -7,6 +7,7 @@ import 'dotenv/config';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
 import { ResponseInterceptor } from './shared/interceptors/response.interceptor';
+import helmet from 'helmet';
 
 const corsWhiteList = ['http://localhost:3000', 'https://coliamai.uk', 'http://127.0.0.1:3000'];
 
@@ -23,6 +24,7 @@ async function bootstrap() {
 
   app.set('trust proxy', 1);
 
+  app.use(helmet());
   app.use(cookieParser());
   app.setGlobalPrefix('api');
   app.useGlobalFilters(new HttpExceptionFilter());

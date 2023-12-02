@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User } from 'src/auth/user.model';
+import { RefreshToken } from 'src/refresh-token/refresh-token.model';
 import Config from 'src/shared/configs';
 import { IDataServices } from 'src/shared/core/data-services.abstract';
 import { MongoDataService } from './mongo-data.service';
-import { RefreshToken } from 'src/refresh-token/refresh-token.model';
 
 @Module({
   imports: [
@@ -20,4 +20,8 @@ import { RefreshToken } from 'src/refresh-token/refresh-token.model';
   providers: [{ provide: IDataServices, useClass: MongoDataService }],
   exports: [IDataServices],
 })
-export class MongoDataModule {}
+export class MongoDataModule {
+  onModuleInit() {
+    console.log('MongoDataModule init');
+  }
+}

@@ -16,22 +16,22 @@ import { PostsModule } from './posts/posts.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [() => Config] }),
-    RedisModule.forRoot({
-      config: {
-        username: Config.redis.username,
-        password: Config.redis.password,
-        host: Config.redis.host,
-      },
-    }),
+    // RedisModule.forRoot({
+    //   config: {
+    //     username: Config.redis.username,
+    //     password: Config.redis.password,
+    //     host: Config.redis.host,
+    //   },
+    // }),
     // GraphQLModule.forRoot<ApolloDriverConfig>({
     //   driver: ApolloDriver,
     // }),
     DataModule,
-    AuthModule,
-    VerificationModule,
-    BoardsModule,
-    RefreshTokenModule,
-    PostsModule,
+    // AuthModule,
+    // VerificationModule,
+    // BoardsModule,
+    // RefreshTokenModule,
+    // PostsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
