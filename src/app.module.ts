@@ -12,6 +12,7 @@ import { RefreshTokenModule } from './refresh-token/refresh-token.module';
 import Config from './shared/configs';
 import { VerificationModule } from './verification/verification.module';
 import { PostsModule } from './posts/posts.module';
+import { TesterModule } from './tester/tester.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { PostsModule } from './posts/posts.module';
     //   driver: ApolloDriver,
     // }),
     DataModule,
+    TesterModule,
     // AuthModule,
     // VerificationModule,
     // BoardsModule,
