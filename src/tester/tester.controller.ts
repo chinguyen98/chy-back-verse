@@ -4,6 +4,8 @@ import { Controller, Get } from '@nestjs/common';
 export class TesterController {
   @Get()
   async commonTester(): Promise<any> {
-    return 'Tester!';
+    // return mongoose.connections.length;
+    // return cpus();
+    return process.memoryUsage().rss;
   }
 }
