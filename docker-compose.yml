@@ -11,18 +11,18 @@ services:
       - .env
     volumes:
       - dbdata:/data/db
-  # redis:
-  #   image: "redis:alpine"
-  #   hostname: redis
-  #   ports:
-  #     - "6379:6379"
-  #   command: /bin/sh -c "redis-server --requirepass $$REDIS_PASS"
-  #   env_file:
-  #     - .env
-  #   volumes:
-  #     - redis:/data
-  #   networks:
-  #     - shared-network
+  redis:
+    image: "redis:alpine"
+    hostname: redis
+    ports:
+      - "6379:6379"
+    command: /bin/sh -c "redis-server --requirepass $$REDIS_PASS"
+    env_file:
+      - .env
+    volumes:
+      - redis:/data
+    networks:
+      - shared-network
   # redis-commander:
   #   hostname: redis-commander
   #   image: ghcr.io/joeferner/redis-commander:latest
@@ -86,8 +86,8 @@ services:
 volumes:
   # ignore:
   dbdata:
-  # redis:
-  #   driver: local
+  redis:
+    driver: local
   # grafana_storage:
 
 networks:
