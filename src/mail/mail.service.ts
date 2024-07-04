@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { JwtService } from '@nestjs/jwt';
-import { EMAIL_VERIFICATION_PAYLOAD } from 'src/shared/types/user';
+import type { EMAIL_VERIFICATION_PAYLOAD } from 'src/shared/types/user';
 
 @Injectable()
 export class MailService {

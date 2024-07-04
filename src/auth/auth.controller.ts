@@ -33,14 +33,8 @@ export class AuthController {
   @Post('sign-up')
   @ApiOperation({ summary: 'Sign up a user' })
   @ApiResponse({})
-  async signUp(
-    @Body(ValidationPipe) registerdto: RegisterCredentialsDto,
-    @Response({ passthrough: true }) res: AppResponse,
-    @Request() req: AppRequest
-  ): Promise<AuthResponseDto> {
-    const data = await this.authService.signUp(registerdto, req.ip);
-    res.setHeader(AUTH_COOKIE, data.refreshToken);
-    return data;
+  async signUp(@Body(ValidationPipe) registerdto: RegisterCredentialsDto): Promise<boolean> {
+    return await this.authService.signUp(registerdto);
   }
 
   @Public()
@@ -51,8 +45,10 @@ export class AuthController {
   async signIn(
     @Response({ passthrough: true }) res: AppResponse,
     @Request() req: AppRequest
-  ): Promise<User> {
-    return req.user.data;
+  ): Promise<AuthResponseDto> {
+    const { accessToken, refreshToken } = await this.authService.signIn(req.user.data, req.ip);
+    res.setHeader(AUTH_COOKIE, refreshToken);
+    return { accessToken, refreshToken };
   }
 
   @Public()

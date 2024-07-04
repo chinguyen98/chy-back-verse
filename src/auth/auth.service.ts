@@ -26,7 +26,7 @@ export class AuthService {
     private readonly refreshTokenService: RefreshTokenService
   ) {}
 
-  async signUp(registerDto: RegisterCredentialsDto, ip: string): Promise<AuthResponseDto> {
+  async signUp(registerDto: RegisterCredentialsDto): Promise<boolean> {
     const { date_of_birth, password, username, email, phone_number, firstName, lastName } =
       registerDto;
 
@@ -62,7 +62,9 @@ export class AuthService {
 
     await this.mailService.sendVerifyAccountEmail(created_user.email, created_user.username);
 
-    return this.generateAccessAndRefreshToken(username, ip);
+    // await this.generateAccessAndRefreshToken(username, ip);
+
+    return true;
   }
 
   async signIn(user: User, ip: string): Promise<AuthResponseDto> {
