@@ -48,6 +48,7 @@ export class AuthController {
   ): Promise<AuthResponseDto> {
     const { accessToken, refreshToken } = await this.authService.signIn(req.user.data, req.ip);
     res.setHeader(AUTH_COOKIE, refreshToken);
+    res.cookie(AUTH_COOKIE, refreshToken, { httpOnly: true, secure: true, sameSite: 'strict' });
     return { accessToken, refreshToken };
   }
 
@@ -65,7 +66,7 @@ export class AuthController {
       req.ip
     );
     const accessToken = await this.authService.generateAccessToken(oldRefreshToken.user.username);
-    res.setHeader(AUTH_COOKIE, refreshToken);
+    res.cookie(AUTH_COOKIE, refreshToken, { httpOnly: true, secure: true, sameSite: 'strict' });
     return {
       accessToken,
       refreshToken,

@@ -37,6 +37,7 @@ async function bootstrap() {
         callback(new Error('Not allowed by CORS!!!!'));
       }
     },
+    credentials: true,
   });
 
   await app.listen(6006);
