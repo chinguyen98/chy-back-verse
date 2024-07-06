@@ -9,10 +9,11 @@ import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
 import { ResponseInterceptor } from './shared/interceptors/response.interceptor';
 import helmet from 'helmet';
 import { corsWhiteList } from 'src/shared/configs';
-import { uWSAdapter } from 'src/shared/libs/uWebsocket';
+import { WsAdapter } from '@nestjs/platform-ws';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.useWebSocketAdapter(new WsAdapter(app));
 
   const documentConfig = new DocumentBuilder()
     .setTitle('Discochy')
@@ -40,8 +41,6 @@ async function bootstrap() {
     },
     credentials: true,
   });
-
-  app.useWebSocketAdapter(new uWSAdapter({ port: 80 }));
 
   await app.listen(6006);
 }
