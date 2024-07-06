@@ -8,6 +8,7 @@ import { DataModule } from './data/data.module';
 import { RefreshTokenModule } from './refresh-token/refresh-token.module';
 import Config from './shared/configs';
 import { VerificationModule } from './verification/verification.module';
+import { WebsocketModule } from 'src/websocket/websocket.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { VerificationModule } from './verification/verification.module';
     VerificationModule,
     // BoardsModule,
     RefreshTokenModule,
+    WebsocketModule,
     // PostsModule,
   ],
   controllers: [AppController],

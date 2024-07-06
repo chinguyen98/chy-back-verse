@@ -39,6 +39,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^7.1.11",
     "@nestjs/typeorm": "^9.0.1",
+    "@nestjs/websockets": "^10.3.10",
     "@typegoose/typegoose": "^11.0.0",
     "bcrypt": "^5.1.0",
     "cache-manager": "^5.2.1",
