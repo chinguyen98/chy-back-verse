@@ -66,6 +66,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.6.2",
+    "uWebSockets.js": "uNetworking/uWebSockets.js#v20.44.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
