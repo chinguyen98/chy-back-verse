@@ -9,8 +9,7 @@ import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
 import { ResponseInterceptor } from './shared/interceptors/response.interceptor';
 import helmet from 'helmet';
 import { corsWhiteList } from 'src/shared/configs';
-import { WsAdapter } from '@nestjs/platform-ws';
-import { IoAdapter } from '@nestjs/platform-socket.io';
+import { uWSAdapter } from 'src/shared/libs/uWebsocket';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -42,7 +41,7 @@ async function bootstrap() {
     credentials: true,
   });
 
-  app.useWebSocketAdapter(new WsAdapter(app));
+  app.useWebSocketAdapter(new uWSAdapter({ port: 6009 }));
 
   await app.listen(6006);
 }

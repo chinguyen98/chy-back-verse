@@ -14,7 +14,8 @@ import { WebsocketModule } from 'src/websocket/websocket.module';
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [() => Config] }),
     RedisModule.forRoot({
-      config: {
+      type: 'single',
+      options: {
         username: Config.redis.username,
         password: Config.redis.password,
         host: Config.redis.host,
