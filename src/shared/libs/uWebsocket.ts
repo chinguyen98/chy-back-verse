@@ -5,7 +5,11 @@ import * as UWS from 'uWebSockets.js';
 import { Observable, fromEvent, EMPTY } from 'rxjs';
 import { mergeMap, filter } from 'rxjs/operators';
 import * as events from 'events';
-import type { ICreateServerArgs, ICreateServerSecureArgs } from 'src/shared/types/websocket';
+import type {
+  ICreateServerArgs,
+  ICreateServerSecureArgs,
+  WebSocketMessage,
+} from 'src/shared/types/websocket';
 
 export class UWSBuilder {
   static buildSSLApp(params: ICreateServerSecureArgs): UWS.TemplatedApp {
@@ -75,7 +79,7 @@ export class uWSAdapter implements WebSocketAdapter {
     process: (data: any) => Observable<any>
   ): Observable<any> {
     const stringMessageData = Buffer.from(buffer.message).toString('utf-8');
-    const message = JSON.parse(stringMessageData);
+    const message: WebSocketMessage<any> = JSON.parse(stringMessageData);
     const messageHandler = handlers.find((handler) => handler.message === message.event);
     if (!messageHandler) {
       return EMPTY;

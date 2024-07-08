@@ -13,3 +13,8 @@ export interface ICreateServerOptionsArgs {
   sslKey?: string;
   sslCert?: string;
 }
+
+export type WebSocketMessage<D> = {
+  event: string;
+  data: D;
+};
