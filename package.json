@@ -28,6 +28,7 @@
     "@nestjs-modules/ioredis": "^2.0.2",
     "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/apollo": "^12.2.0",
+    "@nestjs/bullmq": "^10.1.1",
     "@nestjs/cache-manager": "^2.2.2",
     "@nestjs/common": "^10.3.10",
     "@nestjs/config": "^3.2.3",
@@ -45,6 +46,7 @@
     "@nestjs/websockets": "^10.3.10",
     "@typegoose/typegoose": "^12.5.0",
     "bcrypt": "^5.1.1",
+    "bullmq": "^5.10.3",
     "cache-manager": "^5.7.1",
     "cache-manager-ioredis-yet": "^2.1.1",
     "cache-manager-redis-yet": "^5.1.2",
@@ -120,5 +122,6 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
